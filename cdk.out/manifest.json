@@ -1,0 +1,214 @@
+{
+  "version": "19.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "cdk-sc-level2-workshop.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "cdk-sc-level2-workshop.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "cdk-sc-level2-workshop": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "cdk-sc-level2-workshop.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8242e49ceac9e3ba6aeaf2477bc29868423846d0d41f96b18876a87369304110.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "cdk-sc-level2-workshop.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "cdk-sc-level2-workshop.assets"
+      ],
+      "metadata": {
+        "/cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkScLevel2WorkshopQueue8E70CEEE"
+          }
+        ],
+        "/cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkScLevel2WorkshopQueuePolicy6071E7BE"
+          }
+        ],
+        "/cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/cdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkScLevel2WorkshopQueuecdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7156C7A33"
+          }
+        ],
+        "/cdk-sc-level2-workshop/CdkScLevel2WorkshopTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkScLevel2WorkshopTopic1237BBAD"
+          }
+        ],
+        "/cdk-sc-level2-workshop/TagOptions/0c32bdc4a12e": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TagOptions0c32bdc4a12e0AB978BA"
+          }
+        ],
+        "/cdk-sc-level2-workshop/TagOptions/247d9fbb04b0": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TagOptions247d9fbb04b00B9591B8"
+          }
+        ],
+        "/cdk-sc-level2-workshop/TagOptions/ae4090912c53": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TagOptionsae4090912c53BE2E7631"
+          }
+        ],
+        "/cdk-sc-level2-workshop/TagOptions/ab2358d2fdf1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TagOptionsab2358d2fdf10E49B7CC"
+          }
+        ],
+        "/cdk-sc-level2-workshop/TagOptions/eb18dab5e3c0": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TagOptionseb18dab5e3c0D3105494"
+          }
+        ],
+        "/cdk-sc-level2-workshop/TagOptions/7d89cfbd66b6": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TagOptions7d89cfbd66b6B9F047DF"
+          }
+        ],
+        "/cdk-sc-level2-workshop/TagOptions/0a2c536b9a0f": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TagOptions0a2c536b9a0fA105BEF3"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioF1DCC274"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation614becea62f4": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioTagOptionAssociation614becea62f432B39376"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociatione506287cd5d2": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioTagOptionAssociatione506287cd5d2199F9D90"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation22797edcde0f": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioTagOptionAssociation22797edcde0f1C2B626D"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation4129ef62724d": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioTagOptionAssociation4129ef62724d98748C04"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation5fc0177e95b0": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioTagOptionAssociation5fc0177e95b06A619E21"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation7f1799cf9f68": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioTagOptionAssociation7f1799cf9f689A2DA2E7"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation75d13ad1ee55": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioTagOptionAssociation75d13ad1ee5597485C78"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/PortfolioProductAssociationd5554734c9db": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioPortfolioProductAssociationd5554734c9dbE26EE733"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/LaunchRoleConstraintd5554734c9db": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioLaunchRoleConstraintd5554734c9db7C8E3D34"
+          }
+        ],
+        "/cdk-sc-level2-workshop/AppStream Portfolio/PortfolioShare70d504d2be06": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppStreamPortfolioPortfolioShare70d504d2be06C8216CBE"
+          }
+        ],
+        "/cdk-sc-level2-workshop/Product/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Product896941B4"
+          }
+        ],
+        "/cdk-sc-level2-workshop/ServiceCatalogAppStreamRole1/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceCatalogAppStreamRole174250CDC"
+          }
+        ],
+        "/cdk-sc-level2-workshop/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/cdk-sc-level2-workshop/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/cdk-sc-level2-workshop/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/cdk-sc-level2-workshop/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "cdk-sc-level2-workshop"
+    }
+  }
+}

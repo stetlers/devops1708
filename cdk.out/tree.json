@@ -1,0 +1,629 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.17"
+        }
+      },
+      "cdk-sc-level2-workshop": {
+        "id": "cdk-sc-level2-workshop",
+        "path": "cdk-sc-level2-workshop",
+        "children": {
+          "CdkScLevel2WorkshopQueue": {
+            "id": "CdkScLevel2WorkshopQueue",
+            "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SQS::Queue",
+                  "aws:cdk:cloudformation:props": {
+                    "visibilityTimeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.CfnQueue",
+                  "version": "2.25.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SQS::QueuePolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sqs:SendMessage",
+                              "Condition": {
+                                "ArnEquals": {
+                                  "aws:SourceArn": {
+                                    "Ref": "CdkScLevel2WorkshopTopic1237BBAD"
+                                  }
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "sns.amazonaws.com"
+                              },
+                              "Resource": {
+                                "Fn::GetAtt": [
+                                  "CdkScLevel2WorkshopQueue8E70CEEE",
+                                  "Arn"
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "queues": [
+                          {
+                            "Ref": "CdkScLevel2WorkshopQueue8E70CEEE"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sqs.CfnQueuePolicy",
+                      "version": "2.25.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.QueuePolicy",
+                  "version": "2.25.0"
+                }
+              },
+              "cdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7": {
+                "id": "cdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7",
+                "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/cdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/cdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SNS::Subscription",
+                      "aws:cdk:cloudformation:props": {
+                        "protocol": "sqs",
+                        "topicArn": {
+                          "Ref": "CdkScLevel2WorkshopTopic1237BBAD"
+                        },
+                        "endpoint": {
+                          "Fn::GetAtt": [
+                            "CdkScLevel2WorkshopQueue8E70CEEE",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                      "version": "2.25.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                  "version": "2.25.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sqs.Queue",
+              "version": "2.25.0"
+            }
+          },
+          "CdkScLevel2WorkshopTopic": {
+            "id": "CdkScLevel2WorkshopTopic",
+            "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopTopic",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopTopic/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+                  "version": "2.25.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sns.Topic",
+              "version": "2.25.0"
+            }
+          },
+          "TagOptions": {
+            "id": "TagOptions",
+            "path": "cdk-sc-level2-workshop/TagOptions",
+            "children": {
+              "0c32bdc4a12e": {
+                "id": "0c32bdc4a12e",
+                "path": "cdk-sc-level2-workshop/TagOptions/0c32bdc4a12e",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOption",
+                  "aws:cdk:cloudformation:props": {
+                    "key": "Cost Center",
+                    "value": "1111",
+                    "active": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOption",
+                  "version": "2.25.0"
+                }
+              },
+              "247d9fbb04b0": {
+                "id": "247d9fbb04b0",
+                "path": "cdk-sc-level2-workshop/TagOptions/247d9fbb04b0",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOption",
+                  "aws:cdk:cloudformation:props": {
+                    "key": "Cost Center",
+                    "value": "8912",
+                    "active": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOption",
+                  "version": "2.25.0"
+                }
+              },
+              "ae4090912c53": {
+                "id": "ae4090912c53",
+                "path": "cdk-sc-level2-workshop/TagOptions/ae4090912c53",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOption",
+                  "aws:cdk:cloudformation:props": {
+                    "key": "Cost Center",
+                    "value": "1213",
+                    "active": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOption",
+                  "version": "2.25.0"
+                }
+              },
+              "ab2358d2fdf1": {
+                "id": "ab2358d2fdf1",
+                "path": "cdk-sc-level2-workshop/TagOptions/ab2358d2fdf1",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOption",
+                  "aws:cdk:cloudformation:props": {
+                    "key": "Project",
+                    "value": "SC_level2_workshop",
+                    "active": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOption",
+                  "version": "2.25.0"
+                }
+              },
+              "eb18dab5e3c0": {
+                "id": "eb18dab5e3c0",
+                "path": "cdk-sc-level2-workshop/TagOptions/eb18dab5e3c0",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOption",
+                  "aws:cdk:cloudformation:props": {
+                    "key": "Environment",
+                    "value": "Stage",
+                    "active": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOption",
+                  "version": "2.25.0"
+                }
+              },
+              "7d89cfbd66b6": {
+                "id": "7d89cfbd66b6",
+                "path": "cdk-sc-level2-workshop/TagOptions/7d89cfbd66b6",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOption",
+                  "aws:cdk:cloudformation:props": {
+                    "key": "Environment",
+                    "value": "Dev",
+                    "active": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOption",
+                  "version": "2.25.0"
+                }
+              },
+              "0a2c536b9a0f": {
+                "id": "0a2c536b9a0f",
+                "path": "cdk-sc-level2-workshop/TagOptions/0a2c536b9a0f",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOption",
+                  "aws:cdk:cloudformation:props": {
+                    "key": "Environment",
+                    "value": "Production",
+                    "active": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOption",
+                  "version": "2.25.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_servicecatalog.TagOptions",
+              "version": "2.25.0"
+            }
+          },
+          "AppStream Portfolio": {
+            "id": "AppStream Portfolio",
+            "path": "cdk-sc-level2-workshop/AppStream Portfolio",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::Portfolio",
+                  "aws:cdk:cloudformation:props": {
+                    "displayName": "AppStream Portfolio",
+                    "providerName": "IT Team",
+                    "description": "Potfolio with approved list of AppStream products"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnPortfolio",
+                  "version": "2.25.0"
+                }
+              },
+              "TagOptionAssociation614becea62f4": {
+                "id": "TagOptionAssociation614becea62f4",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation614becea62f4",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOptionAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "resourceId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "tagOptionId": {
+                      "Ref": "TagOptions0c32bdc4a12e0AB978BA"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOptionAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "TagOptionAssociatione506287cd5d2": {
+                "id": "TagOptionAssociatione506287cd5d2",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociatione506287cd5d2",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOptionAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "resourceId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "tagOptionId": {
+                      "Ref": "TagOptions247d9fbb04b00B9591B8"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOptionAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "TagOptionAssociation22797edcde0f": {
+                "id": "TagOptionAssociation22797edcde0f",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation22797edcde0f",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOptionAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "resourceId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "tagOptionId": {
+                      "Ref": "TagOptionsae4090912c53BE2E7631"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOptionAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "TagOptionAssociation4129ef62724d": {
+                "id": "TagOptionAssociation4129ef62724d",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation4129ef62724d",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOptionAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "resourceId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "tagOptionId": {
+                      "Ref": "TagOptionsab2358d2fdf10E49B7CC"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOptionAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "TagOptionAssociation5fc0177e95b0": {
+                "id": "TagOptionAssociation5fc0177e95b0",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation5fc0177e95b0",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOptionAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "resourceId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "tagOptionId": {
+                      "Ref": "TagOptionseb18dab5e3c0D3105494"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOptionAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "TagOptionAssociation7f1799cf9f68": {
+                "id": "TagOptionAssociation7f1799cf9f68",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation7f1799cf9f68",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOptionAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "resourceId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "tagOptionId": {
+                      "Ref": "TagOptions7d89cfbd66b6B9F047DF"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOptionAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "TagOptionAssociation75d13ad1ee55": {
+                "id": "TagOptionAssociation75d13ad1ee55",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation75d13ad1ee55",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::TagOptionAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "resourceId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "tagOptionId": {
+                      "Ref": "TagOptions0a2c536b9a0fA105BEF3"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnTagOptionAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "PortfolioProductAssociationd5554734c9db": {
+                "id": "PortfolioProductAssociationd5554734c9db",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/PortfolioProductAssociationd5554734c9db",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::PortfolioProductAssociation",
+                  "aws:cdk:cloudformation:props": {
+                    "portfolioId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "productId": {
+                      "Ref": "Product896941B4"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnPortfolioProductAssociation",
+                  "version": "2.25.0"
+                }
+              },
+              "LaunchRoleConstraintd5554734c9db": {
+                "id": "LaunchRoleConstraintd5554734c9db",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/LaunchRoleConstraintd5554734c9db",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::LaunchRoleConstraint",
+                  "aws:cdk:cloudformation:props": {
+                    "portfolioId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    },
+                    "productId": {
+                      "Ref": "Product896941B4"
+                    },
+                    "description": "Launch Constraint role for AppStream",
+                    "localRoleName": {
+                      "Ref": "ServiceCatalogAppStreamRole174250CDC"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnLaunchRoleConstraint",
+                  "version": "2.25.0"
+                }
+              },
+              "PortfolioShare70d504d2be06": {
+                "id": "PortfolioShare70d504d2be06",
+                "path": "cdk-sc-level2-workshop/AppStream Portfolio/PortfolioShare70d504d2be06",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::PortfolioShare",
+                  "aws:cdk:cloudformation:props": {
+                    "accountId": "275204643119",
+                    "portfolioId": {
+                      "Ref": "AppStreamPortfolioF1DCC274"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnPortfolioShare",
+                  "version": "2.25.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_servicecatalog.Portfolio",
+              "version": "2.25.0"
+            }
+          },
+          "Product": {
+            "id": "Product",
+            "path": "cdk-sc-level2-workshop/Product",
+            "children": {
+              "Template4e26fa08d6be": {
+                "id": "Template4e26fa08d6be",
+                "path": "cdk-sc-level2-workshop/Product/Template4e26fa08d6be",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "cdk-sc-level2-workshop/Product/Template4e26fa08d6be/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.25.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "cdk-sc-level2-workshop/Product/Template4e26fa08d6be/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.25.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.25.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-sc-level2-workshop/Product/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ServiceCatalog::CloudFormationProduct",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "Elastic AppStream Fleet Product",
+                    "owner": "Admin",
+                    "provisioningArtifactParameters": [
+                      {
+                        "name": "1.0",
+                        "disableTemplateValidation": false,
+                        "info": {
+                          "LoadTemplateFromURL": {
+                            "Fn::Sub": "https://s3.${AWS::Region}.${AWS::URLSuffix}/cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/60554fe8f82edf2bd0f1924fdf1344d90859cdbe81058623f319ce1451faeb74.yaml"
+                          }
+                        }
+                      }
+                    ],
+                    "description": "Elastic AppStream Fleet Product",
+                    "distributor": "ADMIN"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_servicecatalog.CfnCloudFormationProduct",
+                  "version": "2.25.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_servicecatalog.CloudFormationProduct",
+              "version": "2.25.0"
+            }
+          },
+          "ServiceCatalogAppStreamRole1": {
+            "id": "ServiceCatalogAppStreamRole1",
+            "path": "cdk-sc-level2-workshop/ServiceCatalogAppStreamRole1",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-sc-level2-workshop/ServiceCatalogAppStreamRole1/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "servicecatalog.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "roleName": "ServiceCatalogAppStreamRole1"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.25.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.25.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "cdk-sc-level2-workshop/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "cdk-sc-level2-workshop/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.25.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "cdk-sc-level2-workshop/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.25.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.17"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.25.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.25.0"
+    }
+  }
+}

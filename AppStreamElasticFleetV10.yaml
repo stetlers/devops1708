@@ -1,0 +1,215 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: This CloudFormation Stack creates AppStream Elastic Fleet.
+
+Parameters:
+  TheFleetAndStackName:
+    AllowedPattern: '[A-Za-z0-9-]{1,63}'
+    ConstraintDescription: Maximum of 63 alphanumeric characters. Can include hyphens (-), but not spaces. Must be unique within your account in an AWS Region.
+    Description: Fleet name
+    MaxLength: '63'
+    MinLength: '1'
+    Type: String
+    Default: EnterNameHere
+  S3Bucket:
+    Description: Enter local S3 bucket name where artifacts are stored
+    Type: String
+    Default: ''
+  SubnetIds:
+    Description: Enter Subnet Id
+    Type: List<AWS::EC2::Subnet::Id>
+  SecurityGroupIds:
+    Description: Enter Security Group Id
+    Type: List<AWS::EC2::SecurityGroup::Id>
+  UserName:
+    Description: Enter user name for the streaming url
+    Type: String
+    Default: ''
+  StreamInstanceType:
+    Description: Streaming Instance Types
+    Default: stream.standard.small
+    Type: String
+    AllowedValues: 
+      - stream.standard.small
+      - stream.standard.medium
+
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  rLambdaCustomRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service: [lambda.amazonaws.com]
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - !Ref 'rLambdaCustomPolicy'
+  
+  rLambdaCustomPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Action: ['logs:CreateLogGroup', 'logs:CreateLogStream', 'logs:PutLogEvents']
+            Resource: '*'
+          -
+            Effect: Allow
+            Action: ['appstream:CreateStreamingURL']
+            Resource: '*'
+          -
+            Effect: Allow
+            Action:
+              - sts:AssumeRole
+            Resource: '*'
+  
+  AppStreamFleet:
+    Type: AWS::AppStream::Fleet
+    Properties:
+      Name: !Ref 'TheFleetAndStackName'
+      Description: Appstream fleet
+      DisplayName: Fleet created in CloudFormation
+      InstanceType: !Ref 'StreamInstanceType'
+      FleetType: ELASTIC
+      VpcConfig:
+        SubnetIds:
+          !Ref 'SubnetIds'
+        SecurityGroupIds:
+          !Ref 'SecurityGroupIds'
+      MaxUserDurationInSeconds: '57600'
+      DisconnectTimeoutInSeconds: '300'
+      EnableDefaultInternetAccess: false
+      MaxConcurrentSessions: 5
+      Platform: AMAZON_LINUX2
+      StreamView: DESKTOP
+    CreationPolicy:
+      StartFleet: true
+
+  AppStreamAppBlock:
+    Type: AWS::AppStream::AppBlock
+    Properties:
+      Name: RDP-AppBlock
+      Description: Appstream Application Block
+      DisplayName: RDP-AppBlock
+      SetupScriptDetails:
+        ExecutablePath: /usr/bin/bash
+        ExecutableParameters: /opt/appstream/AppBlocks/RDP-AppBlock/mount-script.sh
+        TimeoutInSeconds: 60
+        ScriptS3Location:
+          S3Bucket: !Ref 'S3Bucket'
+          S3Key: mount-script.sh
+      SourceS3Location:
+        S3Bucket: !Ref 'S3Bucket'
+        S3Key: vhd.img
+
+  AppStreamApplication:
+    Type: AWS::AppStream::Application
+    Properties:
+      Name: RDP-AppBlock
+      AppBlockArn: !GetAtt 'AppStreamAppBlock.Arn'
+      Description: Remote Desktop
+      DisplayName: RDP Client
+      IconS3Location:
+        S3Bucket: !Ref 'S3Bucket'
+        S3Key: remmina-icon.png
+      InstanceFamilies:
+        - GENERAL_PURPOSE
+      LaunchParameters: --new --protocol=RDP
+      LaunchPath: /usr/bin/remmina
+      Platforms:
+        - AMAZON_LINUX2
+
+  ApplicationFleetAssociation:
+    Type: AWS::AppStream::ApplicationFleetAssociation
+    Properties:
+      ApplicationArn: !Ref 'AppStreamApplication'
+      FleetName: !Ref 'TheFleetAndStackName'
+    DependsOn:
+      - AppStreamFleet
+
+  AppStreamStack:
+    Type: AWS::AppStream::Stack
+    Properties:
+      Name: !Ref 'TheFleetAndStackName'
+      Description: Stack was created using CloudFormation
+      StorageConnectors:
+        - ConnectorType: HOMEFOLDERS
+          ResourceIdentifier: TheCloudFormationStackBucket
+
+  AppStreamDemoStackFleetAssociation:
+    Type: AWS::AppStream::StackFleetAssociation
+    Properties:
+      FleetName: !Ref 'AppStreamFleet'
+      StackName: !Ref 'AppStreamStack'
+
+  Primer:
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W58
+            reason: The IAM policy assigned to the function does grant permissions to write CloudWatch logs
+          - id: W89
+            reason: This function does not need a VPC.
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.lambda_handler
+      Environment:
+        Variables:
+            stackAndFleetNameParameter: !Ref 'AppStreamStack'
+            userNameParameter: !Ref 'UserName'
+      Runtime: python3.9
+      InlineCode: |
+        import json
+        import os
+        import cfnresponse
+        import boto3
+        import random
+        import string
+
+        def lambda_handler(event, context):
+            appstream = boto3.client('appstream')
+            responseData = {};
+            length = 16
+
+            stackAndFleetName = os.environ['stackAndFleetNameParameter']
+            username = os.environ['userNameParameter']
+
+            request = appstream.create_streaming_url(
+                StackName=stackAndFleetName,
+                FleetName=stackAndFleetName,
+                UserId=username,
+                Validity=3600
+            )
+            url = request['StreamingURL']
+            print("Success! AS2 Streaming URL created. URL " + url)
+            responseData['URL'] = url
+            print(responseData)
+            cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+            return
+      Description: Generate AppStream URL
+      MemorySize: 128
+      Timeout: 8
+      Role: !GetAtt 'rLambdaCustomRole.Arn'
+      Tracing: Active
+      ReservedConcurrentExecutions: 1
+
+  LambdaInvocation:
+    Type: AWS::CloudFormation::CustomResource
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      ServiceToken: !GetAtt 'Primer.Arn'
+    DependsOn:
+      - AppStreamDemoStackFleetAssociation
+
+Outputs:
+  MyAppStreamURL:
+    Description: AppStream URL
+    Value: !GetAtt 'LambdaInvocation.URL'

@@ -1,0 +1,592 @@
+{
+ "Resources": {
+  "CdkScLevel2WorkshopQueue8E70CEEE": {
+   "Type": "AWS::SQS::Queue",
+   "Properties": {
+    "VisibilityTimeout": 300
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/Resource"
+   }
+  },
+  "CdkScLevel2WorkshopQueuePolicy6071E7BE": {
+   "Type": "AWS::SQS::QueuePolicy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sqs:SendMessage",
+       "Condition": {
+        "ArnEquals": {
+         "aws:SourceArn": {
+          "Ref": "CdkScLevel2WorkshopTopic1237BBAD"
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "sns.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::GetAtt": [
+         "CdkScLevel2WorkshopQueue8E70CEEE",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Queues": [
+     {
+      "Ref": "CdkScLevel2WorkshopQueue8E70CEEE"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/Policy/Resource"
+   }
+  },
+  "CdkScLevel2WorkshopQueuecdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7156C7A33": {
+   "Type": "AWS::SNS::Subscription",
+   "Properties": {
+    "Protocol": "sqs",
+    "TopicArn": {
+     "Ref": "CdkScLevel2WorkshopTopic1237BBAD"
+    },
+    "Endpoint": {
+     "Fn::GetAtt": [
+      "CdkScLevel2WorkshopQueue8E70CEEE",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopQueue/cdksclevel2workshopCdkScLevel2WorkshopTopicB26E5BE7/Resource"
+   }
+  },
+  "CdkScLevel2WorkshopTopic1237BBAD": {
+   "Type": "AWS::SNS::Topic",
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/CdkScLevel2WorkshopTopic/Resource"
+   }
+  },
+  "TagOptions0c32bdc4a12e0AB978BA": {
+   "Type": "AWS::ServiceCatalog::TagOption",
+   "Properties": {
+    "Key": "Cost Center",
+    "Value": "1111",
+    "Active": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/TagOptions/0c32bdc4a12e"
+   }
+  },
+  "TagOptions247d9fbb04b00B9591B8": {
+   "Type": "AWS::ServiceCatalog::TagOption",
+   "Properties": {
+    "Key": "Cost Center",
+    "Value": "8912",
+    "Active": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/TagOptions/247d9fbb04b0"
+   }
+  },
+  "TagOptionsae4090912c53BE2E7631": {
+   "Type": "AWS::ServiceCatalog::TagOption",
+   "Properties": {
+    "Key": "Cost Center",
+    "Value": "1213",
+    "Active": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/TagOptions/ae4090912c53"
+   }
+  },
+  "TagOptionsab2358d2fdf10E49B7CC": {
+   "Type": "AWS::ServiceCatalog::TagOption",
+   "Properties": {
+    "Key": "Project",
+    "Value": "SC_level2_workshop",
+    "Active": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/TagOptions/ab2358d2fdf1"
+   }
+  },
+  "TagOptionseb18dab5e3c0D3105494": {
+   "Type": "AWS::ServiceCatalog::TagOption",
+   "Properties": {
+    "Key": "Environment",
+    "Value": "Stage",
+    "Active": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/TagOptions/eb18dab5e3c0"
+   }
+  },
+  "TagOptions7d89cfbd66b6B9F047DF": {
+   "Type": "AWS::ServiceCatalog::TagOption",
+   "Properties": {
+    "Key": "Environment",
+    "Value": "Dev",
+    "Active": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/TagOptions/7d89cfbd66b6"
+   }
+  },
+  "TagOptions0a2c536b9a0fA105BEF3": {
+   "Type": "AWS::ServiceCatalog::TagOption",
+   "Properties": {
+    "Key": "Environment",
+    "Value": "Production",
+    "Active": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/TagOptions/0a2c536b9a0f"
+   }
+  },
+  "AppStreamPortfolioF1DCC274": {
+   "Type": "AWS::ServiceCatalog::Portfolio",
+   "Properties": {
+    "DisplayName": "AppStream Portfolio",
+    "ProviderName": "IT Team",
+    "Description": "Potfolio with approved list of AppStream products"
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/Resource"
+   }
+  },
+  "AppStreamPortfolioTagOptionAssociation614becea62f432B39376": {
+   "Type": "AWS::ServiceCatalog::TagOptionAssociation",
+   "Properties": {
+    "ResourceId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "TagOptionId": {
+     "Ref": "TagOptions0c32bdc4a12e0AB978BA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation614becea62f4"
+   }
+  },
+  "AppStreamPortfolioTagOptionAssociatione506287cd5d2199F9D90": {
+   "Type": "AWS::ServiceCatalog::TagOptionAssociation",
+   "Properties": {
+    "ResourceId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "TagOptionId": {
+     "Ref": "TagOptions247d9fbb04b00B9591B8"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociatione506287cd5d2"
+   }
+  },
+  "AppStreamPortfolioTagOptionAssociation22797edcde0f1C2B626D": {
+   "Type": "AWS::ServiceCatalog::TagOptionAssociation",
+   "Properties": {
+    "ResourceId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "TagOptionId": {
+     "Ref": "TagOptionsae4090912c53BE2E7631"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation22797edcde0f"
+   }
+  },
+  "AppStreamPortfolioTagOptionAssociation4129ef62724d98748C04": {
+   "Type": "AWS::ServiceCatalog::TagOptionAssociation",
+   "Properties": {
+    "ResourceId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "TagOptionId": {
+     "Ref": "TagOptionsab2358d2fdf10E49B7CC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation4129ef62724d"
+   }
+  },
+  "AppStreamPortfolioTagOptionAssociation5fc0177e95b06A619E21": {
+   "Type": "AWS::ServiceCatalog::TagOptionAssociation",
+   "Properties": {
+    "ResourceId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "TagOptionId": {
+     "Ref": "TagOptionseb18dab5e3c0D3105494"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation5fc0177e95b0"
+   }
+  },
+  "AppStreamPortfolioTagOptionAssociation7f1799cf9f689A2DA2E7": {
+   "Type": "AWS::ServiceCatalog::TagOptionAssociation",
+   "Properties": {
+    "ResourceId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "TagOptionId": {
+     "Ref": "TagOptions7d89cfbd66b6B9F047DF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation7f1799cf9f68"
+   }
+  },
+  "AppStreamPortfolioTagOptionAssociation75d13ad1ee5597485C78": {
+   "Type": "AWS::ServiceCatalog::TagOptionAssociation",
+   "Properties": {
+    "ResourceId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "TagOptionId": {
+     "Ref": "TagOptions0a2c536b9a0fA105BEF3"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/TagOptionAssociation75d13ad1ee55"
+   }
+  },
+  "AppStreamPortfolioPortfolioProductAssociationd5554734c9dbE26EE733": {
+   "Type": "AWS::ServiceCatalog::PortfolioProductAssociation",
+   "Properties": {
+    "PortfolioId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "ProductId": {
+     "Ref": "Product896941B4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/PortfolioProductAssociationd5554734c9db"
+   }
+  },
+  "AppStreamPortfolioLaunchRoleConstraintd5554734c9db7C8E3D34": {
+   "Type": "AWS::ServiceCatalog::LaunchRoleConstraint",
+   "Properties": {
+    "PortfolioId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    },
+    "ProductId": {
+     "Ref": "Product896941B4"
+    },
+    "Description": "Launch Constraint role for AppStream",
+    "LocalRoleName": {
+     "Ref": "ServiceCatalogAppStreamRole174250CDC"
+    }
+   },
+   "DependsOn": [
+    "AppStreamPortfolioPortfolioProductAssociationd5554734c9dbE26EE733"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/LaunchRoleConstraintd5554734c9db"
+   }
+  },
+  "AppStreamPortfolioPortfolioShare70d504d2be06C8216CBE": {
+   "Type": "AWS::ServiceCatalog::PortfolioShare",
+   "Properties": {
+    "AccountId": "275204643119",
+    "PortfolioId": {
+     "Ref": "AppStreamPortfolioF1DCC274"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/AppStream Portfolio/PortfolioShare70d504d2be06"
+   }
+  },
+  "Product896941B4": {
+   "Type": "AWS::ServiceCatalog::CloudFormationProduct",
+   "Properties": {
+    "Name": "Elastic AppStream Fleet Product",
+    "Owner": "Admin",
+    "ProvisioningArtifactParameters": [
+     {
+      "DisableTemplateValidation": false,
+      "Info": {
+       "LoadTemplateFromURL": {
+        "Fn::Sub": "https://s3.${AWS::Region}.${AWS::URLSuffix}/cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/60554fe8f82edf2bd0f1924fdf1344d90859cdbe81058623f319ce1451faeb74.yaml"
+       }
+      },
+      "Name": "1.0"
+     }
+    ],
+    "Description": "Elastic AppStream Fleet Product",
+    "Distributor": "ADMIN"
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/Product/Resource"
+   }
+  },
+  "ServiceCatalogAppStreamRole174250CDC": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "servicecatalog.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "ServiceCatalogAppStreamRole1"
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/ServiceCatalogAppStreamRole1/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/22QwW6DMAyGn6X3kHVFe4C20k6TxkrvlRtScIG4i5NNFeLdl4QViWmX2P/vz3aSjdy8yPUKvjlTVZt1eJZD6UC1IlingT9ZDh9eey32FzMl6SyoQ3WfzUmOgk3gS39mZfHmkEwkFvpIN1TRTUno0PYLlVbgoKNaDkeo3xPJCXooUZB1l7CFor0QM7NlJoXwWDtDhaXKK/en/AbeqOZAnd6HZc4CGrdoKxuw4dkd+eqVbJ8af0dF7t9CeE9+AmbtWG5jCFruvGq12wFrgdDLIe6ME2IcR5G48Oc1mjrZmslblZBwtQrj/FEUd9eQecrl81rmqysjZtYbh72Whyn+AOTzjwDMAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "cdk-sc-level2-workshop/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
